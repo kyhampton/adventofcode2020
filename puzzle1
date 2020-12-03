@@ -1,12 +1,43 @@
-#!usr/bin/python3
-#Ky
-# Day 1
-# Puzzle 1
+#!usr/bin/python
+#puzzle 1
 
 import csv
 import sys
 
+
 if len(sys.argv) != 2:
-  print("Error: fix your crap")
-  exit (1)
- 
+    print("Usage: dbload CSVFILE DATABASEFILE")
+    exit (1)
+	
+d1 = sys.argv[1]
+
+year=2020
+total=0
+listOfNumbers=[]
+secondListOfNumbers=[]
+
+file = csv.reader(open(d1, encoding="utf-8-sig"), delimiter=',')
+#while total != year:
+for line in file:
+	num = str(line)
+	num1 = ''.join(i for i in num if i.isdigit())
+	listOfNumbers.append(num1)
+	secondListOfNumbers.append(num1)
+
+for x in listOfNumbers:
+	i = 0
+	
+	while i < 200:
+		secondNum = int(secondListOfNumbers[i])
+		if (int(x) + secondNum) == year:
+			total = int(x) + secondNum
+			print(x, secondNum, total, "Success!!!")
+			exit (0)
+		elif (int(x) + secondNum) != year:
+			i += 1
+			#print(i, x, secondNum)
+			continue
+
+
+	
+exit (0)
