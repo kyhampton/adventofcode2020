@@ -1,0 +1,91 @@
+#!usr/bin/python
+#puzzle 1
+
+import csv
+import sys
+
+
+if len(sys.argv) != 2:
+    print("Usage: dbload CSVFILE DATABASEFILE")
+    exit (1)
+	
+d1 = sys.argv[1]
+
+file = csv.reader(open(d1, encoding="utf-8-sig"), delimiter=',')
+
+ro = []
+chunks = []
+group = []
+min = []
+max = []
+letter = []
+password = []
+firstGroup = []
+secondGroup = []
+thirdGroup = []
+
+#Put each line into Array List
+for line in file:
+	ro = str(line)
+	chunks = ro.split(' ')
+	
+	#First Chunk
+	first = str(chunks[0])
+	
+	#Second Chunk
+	second = str(chunks[1])
+	
+	#Third Chunk
+	third = str(chunks[2])
+
+	#Split firstGroup
+	num1 = first[:0] + first[2:]
+	firstGroup.append(num1)
+	
+	#Split secondGroup
+	l = second.replace(':', '')
+	letter.append(l)
+	
+	#Split thirdGroup
+	p = third.replace("']", '')
+	password.append(p)
+	
+#Min and Max
+for num in firstGroup:
+	num = str(num)
+	chunks = num.split('-')
+	x = chunks[0]
+	min.append(x)
+	y = chunks[1]
+	max.append(y)
+
+
+i = 0
+counter = 0
+while i < 1000:
+
+	lett = letter[i]
+	passw = password[i]
+	m = min[i]
+	ma = max[i]
+	
+	x = int(m) - 1
+	y = int(ma) - 1
+	
+	resultOne = passw[x]
+	resultTwo = passw[y]
+	
+	
+	if (resultOne == lett and resultTwo != lett) or (resultOne != lett and resultTwo == lett):
+		print("Success")
+		counter += 1
+		i += 1
+		continue
+	else:
+		#print("Result is ", result, "min is ", min, "max is ", max, "letter is", letter)
+		print("Fail", m, ma, lett, resultOne, resultTwo)
+		i += 1
+		continue
+	#i += 1
+print(counter)
+exit (0)
